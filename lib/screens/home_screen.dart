@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 
 import '../components/task_group.dart';
 import '../core/constants.dart';
@@ -81,20 +82,20 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 16.0),
+          padding: const EdgeInsets.only(left: 20.0, top: 20),
           child: Text(
             "Hello Mary",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 15.0),
+          padding: const EdgeInsets.only(left: 20.0, top: 8),
           child: Text(
             "You have 4/7 tasks left to complete",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
           ),
         ),
-        const SizedBox(height: 30.0),
+        const SizedBox(height: 20.0),
         Padding(
           padding: const EdgeInsets.only(left: 20.0),
           child: Row(
@@ -112,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         ),
         const SizedBox(height: 30.0),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
@@ -141,50 +142,51 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           ),
         ),
         Expanded(
-            child: TabBarView(
-          controller: tabController,
-          children: [
-            TaskGroup(
-              'Daily Tasks',
-              subtitle: '($dailyTSubtitle)',
-              tasks: profile.dailyTasks,
-              onDone: (rawTask) => setState(
-                () {
+            child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12),
+          child: TabBarView(
+            controller: tabController,
+            children: [
+              TaskGroup(
+                'Daily Tasks',
+                tasks: profile.dailyTasks,
+                onDone: (rawTask) => setState(
+                  () {
+                    final task = rawTask as Task;
+                    if (task.isComplete) return;
+
+                    profile.markTaskComplete(TaskType.daily, task);
+                    confettiController.play();
+                  },
+                ),
+              ),
+              TaskGroup(
+                'Weekly Tasks',
+                tasks: profile.weeklyTasks,
+                onDone: (rawTask) => setState(() {
                   final task = rawTask as Task;
                   if (task.isComplete) return;
 
-                  profile.markTaskComplete(TaskType.daily, task);
+                  profile.markTaskComplete(TaskType.weekly, task);
                   confettiController.play();
-                },
+                }),
               ),
-            ),
-            TaskGroup(
-              'Weekly Tasks',
-              subtitle: '($weeklyTSubtitle)',
-              tasks: profile.weeklyTasks,
-              onDone: (rawTask) => setState(() {
-                final task = rawTask as Task;
-                if (task.isComplete) return;
+              TaskGroup(
+                'Side Quests',
+                tasks: profile.sideQuests,
+                onDone: (rawTask) => setState(() {
+                  final quest = rawTask as SideQuest;
+                  if (quest.isComplete) return;
 
-                profile.markTaskComplete(TaskType.weekly, task);
-                confettiController.play();
-              }),
-            ),
-            TaskGroup(
-              'Side Quests',
-              tasks: profile.sideQuests,
-              onDone: (rawTask) => setState(() {
-                final quest = rawTask as SideQuest;
-                if (quest.isComplete) return;
-
-                profile.markTaskComplete(
-                  TaskType.sideQuests,
-                  quest,
-                );
-                confettiController.play();
-              }),
-            ),
-          ],
+                  profile.markTaskComplete(
+                    TaskType.sideQuests,
+                    quest,
+                  );
+                  confettiController.play();
+                }),
+              ),
+            ],
+          ),
         )),
         ConfettiWidget(
           confettiController: confettiController,

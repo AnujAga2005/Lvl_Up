@@ -38,7 +38,8 @@ void main() async {
     runApp(MaterialApp(
       title: 'Lvl Up',
       debugShowCheckedModeBanner: kDebugMode,
-      theme: ThemeData(useMaterial3: true),
+      theme: ThemeData(
+          useMaterial3: true, scaffoldBackgroundColor: Colors.grey.shade300),
       home: Text(e.toString()),
     ));
     return;
@@ -47,7 +48,8 @@ void main() async {
   runApp(MaterialApp(
     title: 'Lvl Up',
     debugShowCheckedModeBanner: kDebugMode,
-    theme: ThemeData(useMaterial3: true),
+    theme: ThemeData(
+        useMaterial3: true, scaffoldBackgroundColor: Colors.grey.shade400),
     home: MyApp(profile),
   ));
 }
@@ -89,9 +91,12 @@ class _MyAppState extends State<MyApp> {
     return Scaffold(
         drawer: Drawer(child: SettingsScreen(profile)),
         appBar: AppBar(
+          elevation: 5,
+          backgroundColor: Color.fromRGBO(0, 0, 0, 0.7),
           title: Text(
             page.title,
-            style: GoogleFonts.monda(fontWeight: FontWeight.bold),
+            style: GoogleFonts.monda(
+                fontWeight: FontWeight.bold, color: Colors.white),
           ),
           actions: [
             IconButton(
@@ -104,10 +109,11 @@ class _MyAppState extends State<MyApp> {
                 );
               },
               icon: Icon(
-                Icons.person_outline_rounded,
-                color: Colors.purple.shade500,
+                Icons.person_2_sharp,
+                size: 30,
+                color: const Color.fromARGB(255, 0, 0, 0),
               ),
-            )
+            ),
           ],
         ),
         body: PageView(
@@ -116,25 +122,13 @@ class _MyAppState extends State<MyApp> {
           children: pages,
         ),
         bottomNavigationBar: StylishBottomBar(
-//  option: AnimatedBarOptions(
-//    iconSize: 32,
-//    barAnimation: BarAnimation.liquid,
-//    iconStyle: IconStyle.animated,
-//    opacity: 0.3,
-//  ),
-//  option: BubbleBarOptions(
-//    barStyle: BubbleBarStyle.horizotnal,
-//    // barStyle: BubbleBarStyle.vertical,
-//    bubbleFillStyle: BubbleFillStyle.fill,
-//    // bubbleFillStyle: BubbleFillStyle.outlined,
-//    opacity: 0.3,
-//  ),
+          backgroundColor: Color.fromRGBO(0, 0, 0, 0.7),
           option: DotBarOptions(
             dotStyle: DotStyle.tile,
             gradient: const LinearGradient(
               colors: [
-                Colors.deepPurple,
-                Colors.pink,
+                Color.fromARGB(255, 255, 255, 255),
+                Color.fromARGB(255, 0, 0, 0),
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -142,20 +136,23 @@ class _MyAppState extends State<MyApp> {
           ),
           items: [
             BottomBarItem(
-              icon: const Icon(Icons.home_outlined),
+              icon: const Icon(
+                Icons.home,
+                size: 34,
+              ),
               title: const Text('Home'),
-              backgroundColor: Colors.black,
+              backgroundColor: const Color.fromARGB(255, 0, 0, 0),
               selectedIcon: const Icon(Icons.home_filled),
             ),
             BottomBarItem(
               icon: const Icon(Icons.add_circle),
               title: const Text('Add Tasks'),
-              backgroundColor: Colors.orange,
+              backgroundColor: const Color.fromARGB(255, 0, 0, 0),
             ),
             BottomBarItem(
               icon: const Icon(Icons.inventory),
               title: const Text('Rewards'),
-              backgroundColor: const Color.fromARGB(255, 6, 194, 128),
+              backgroundColor: const Color.fromARGB(255, 0, 0, 0),
             ),
             BottomBarItem(
               icon: const Icon(Icons.settings),
@@ -163,7 +160,6 @@ class _MyAppState extends State<MyApp> {
               backgroundColor: const Color.fromARGB(255, 0, 0, 0),
             ),
           ],
-
           currentIndex: pageIdx,
           onTap: (index) {
             setState(() {

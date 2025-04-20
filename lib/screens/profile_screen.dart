@@ -19,9 +19,10 @@ final class ProfileScreen extends StatelessWidget {
           'Profile',
           style: GoogleFonts.monda(fontWeight: FontWeight.bold),
         ),
+        backgroundColor: Color.fromRGBO(0, 0, 0, 0.7),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        padding: const EdgeInsets.only(left: 20.0, right: 20, top: 20),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
