@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'components/botm_nav_bar.dart';
 import 'core/db_handler.dart';
 import 'core/profile.dart';
 import 'screens/home_screen.dart';
